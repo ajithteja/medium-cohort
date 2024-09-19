@@ -79,8 +79,13 @@ userRoute.post('/signin', async (c) => {
     })
 
     if (userData) {
+      try {
         const token = await sign({ id: userData.id }, c.env.JWT_SECRETE)
         return c.json({ id: userData.id, token })
+      } catch (error) {
+        console.log(error)
+      }
+        
     } else{
         c.status(400)
         return c.text('Invalid')
